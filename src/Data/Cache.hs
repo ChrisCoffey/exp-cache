@@ -1,9 +1,16 @@
 module Data.Cache (
     Cache,
-    newCache
+    newCache,
+
+    EvictionStrategy(..),
+
+    -- The sequential LRU implementation
+    SeqLRU,
+    newSeqLRU
     ) where
 
-import Data.Cache.Eviction (EvictionStrategy)
+import Data.Cache.Eviction (EvictionStrategy(..))
+import Data.Cache.Eviction.LRU
 
 import qualified Data.HashMap.Strict as HM
 import Control.DeepSeq (NFData)
@@ -16,7 +23,7 @@ data Cache k v s =
         maxSize :: Int
         }
 
-newCache :: (Hashable k, NFData v, EvictionStrategy s k) =>
+newCache :: (Hashable k, NFData v, EvictionStrategy s k, Eq k, Ord k) =>
     Int -- ^ The maximum cache size
     -> s -- ^ The evictionStrategy
     -> Cache k v s

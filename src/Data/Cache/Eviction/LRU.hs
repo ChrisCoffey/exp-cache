@@ -1,5 +1,6 @@
 module Data.Cache.Eviction.LRU (
-    SeqLRU
+    SeqLRU,
+    newSeqLRU
 ) where
 
 import Data.Cache.Eviction
@@ -7,22 +8,24 @@ import Data.Cache.Eviction
 import Data.Sequence
 import Data.Monoid ((<>))
 import Data.Hashable (Hashable, hash)
-import Data.Proxy (Proxy)
 
-newtype SeqLRU = SeqLRU (Seq Int)
+newtype SeqLRU k = SeqLRU (Seq k)
+    deriving (Eq, Show)
 
-instance (Hashable k) => EvictionStrategy SeqLRU k where
-    recordLookup :: (Hashable k) => k -> SeqLRU -> SeqLRU
-    recordLookup k (SeqLRU elements) =
+newSeqLRU :: SeqLRU k
+newSeqLRU = SeqLRU empty
+
+instance EvictionStrategy (SeqLRU k) k where
+    recordLookup :: (Eq k) => k -> SeqLRU k -> SeqLRU k
+    recordLookup key (SeqLRU elements) =
         case viewl right of
             EmptyL -> SeqLRU $ elements |> key
             val :< rest -> SeqLRU $ (key <| left) <> right
         where
             (left, right) = breakl (== key) elements
-            key = hash k
 
-    evict :: Proxy k -> SeqLRU -> SeqLRU
-    evict _ (SeqLRU elements) =
+    evict :: SeqLRU k-> (SeqLRU k, Maybe k)
+    evict (SeqLRU elements) =
         case viewr elements of
-            EmptyR -> SeqLRU elements
-            rest :> last -> SeqLRU rest
+            EmptyR -> (SeqLRU elements, Nothing)
+            rest :> last -> (SeqLRU rest, Just last)

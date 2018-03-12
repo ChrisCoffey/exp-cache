@@ -49,6 +49,11 @@ test-suite exp-cache-test
   build-depends:
       base >=4.7 && <5
     , exp-cache
+    , HUnit
+    , tasty
+    , tasty-hunit
+    , tasty-quickcheck
   other-modules:
-      Paths_lru_cache
+      Spec.LRUTests,
+      Spec.CacheTests
   default-language: Haskell2010
