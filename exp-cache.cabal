@@ -37,7 +37,7 @@ library
     Data.Cache.Eviction
   default-extensions:  DataKinds FlexibleContexts ScopedTypeVariables OverloadedStrings ViewPatterns NamedFieldPuns
                        KindSignatures RecordWildCards ConstraintKinds TypeSynonymInstances FlexibleInstances MultiParamTypeClasses
-                       InstanceSigs
+                       InstanceSigs FunctionalDependencies
   default-language: Haskell2010
 
 test-suite exp-cache-test
@@ -57,3 +57,17 @@ test-suite exp-cache-test
       Spec.LRUTests,
       Spec.CacheTests
   default-language: Haskell2010
+
+executable exp-cache-benchmarks
+    main-is: Main.hs
+    hs-source-dirs:
+        benchmarks
+    ghc-options: -threaded -rtsopts -with-rtsopts=-N -O2 -fno-full-laziness
+    build-depends:
+        base
+      , exp-cache
+      , criterion
+      , random
+    other-modules:
+        Benchmarks.LRU
+    default-language: Haskell2010

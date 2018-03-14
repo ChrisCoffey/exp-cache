@@ -23,10 +23,10 @@ data Cache k v s =
         maxSize :: Int
         }
 
-newCache :: (Hashable k, NFData v, EvictionStrategy s k, Eq k, Ord k) =>
+newCache :: (Hashable k, NFData v, EvictionStrategy s, Eq k, Ord k) =>
     Int -- ^ The maximum cache size
-    -> s -- ^ The evictionStrategy
-    -> Cache k v s
+    -> s k -- ^ The evictionStrategy
+    -> Cache k v (s k)
 newCache maxSize evictionStrategy =
     Cache {
         cacheData = HM.empty,

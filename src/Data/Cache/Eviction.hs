@@ -4,12 +4,12 @@ module Data.Cache.Eviction (
 
 import Data.Hashable (Hashable)
 
-class EvictionStrategy s k where
+class EvictionStrategy s where
     recordLookup :: Eq k =>
         k -- ^ The key to lookup
-        -> s -- ^ The strategy (containing any state necessary)
-        -> s -- ^ The strategy + state folloiwng adding the key
+        -> s k-- ^ The strategy (containing any state necessary)
+        -> s k -- ^ The strategy + state folloiwng adding the key
 
     evict ::
-        s
-        -> (s, Maybe k)
+        s k
+        -> (s k, Maybe k)

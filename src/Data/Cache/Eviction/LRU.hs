@@ -15,7 +15,7 @@ newtype SeqLRU k = SeqLRU (Seq k)
 newSeqLRU :: SeqLRU k
 newSeqLRU = SeqLRU empty
 
-instance EvictionStrategy (SeqLRU k) k where
+instance EvictionStrategy SeqLRU where
     recordLookup :: (Eq k) => k -> SeqLRU k -> SeqLRU k
     recordLookup key (SeqLRU elements) =
         case viewl right of
@@ -24,7 +24,7 @@ instance EvictionStrategy (SeqLRU k) k where
         where
             (left, right) = breakl (== key) elements
 
-    evict :: SeqLRU k-> (SeqLRU k, Maybe k)
+    evict :: SeqLRU k -> (SeqLRU k, Maybe k)
     evict (SeqLRU elements) =
         case viewr elements of
             EmptyR -> (SeqLRU elements, Nothing)
