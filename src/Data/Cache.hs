@@ -6,7 +6,10 @@ module Data.Cache (
 
     -- The sequential LRU implementation
     SeqLRU,
-    newSeqLRU
+    newSeqLRU,
+    -- Actual LRU implementation
+    LRU,
+    newLRU
     ) where
 
 import Data.Cache.Eviction (EvictionStrategy(..))

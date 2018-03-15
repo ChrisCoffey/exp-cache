@@ -29,7 +29,7 @@ library
     , containers
     , deepseq
     , hashable
-
+    , psqueues
   exposed-modules:
     Data.Cache
   other-modules:
