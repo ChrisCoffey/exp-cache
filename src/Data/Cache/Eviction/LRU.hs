@@ -3,7 +3,8 @@ module Data.Cache.Eviction.LRU (
     newSeqLRU,
 
     LRU,
-    newLRU
+    newLRU,
+    LRUContentsOnlyEq(..)
 ) where
 
 import Data.Cache.Eviction
@@ -42,6 +43,13 @@ data LRU k =
         queue :: PSQ.HashPSQ k Word64 (),
         time :: Word64
         } deriving (Eq, Show)
+
+newtype LRUContentsOnlyEq k = LRUContentsOnlyEq (LRU k)
+    deriving Show
+instance (Hashable k, Ord k) => Eq (LRUContentsOnlyEq k) where
+    (==) (LRUContentsOnlyEq lru)
+         (LRUContentsOnlyEq lru') = queue lru == queue lru'
+
 
 newLRU :: LRU k
 newLRU = LRU PSQ.empty 0

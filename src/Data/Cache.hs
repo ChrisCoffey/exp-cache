@@ -69,13 +69,3 @@ readThrough cache@(Cache {maxSize, evictionStrategy, cacheData, currentSize}) ke
             let strat' = recordLookup key evictionStrategy
                 cacheData' = HM.insert key v cacheData
             pure (v, cache {cacheData = cacheData', evictionStrategy = strat'})
-
-
-
-
-
-
-
-
-
-
