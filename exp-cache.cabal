@@ -37,7 +37,7 @@ library
     Data.Cache.Eviction
   default-extensions:  DataKinds FlexibleContexts ScopedTypeVariables OverloadedStrings ViewPatterns NamedFieldPuns
                        KindSignatures RecordWildCards ConstraintKinds TypeSynonymInstances FlexibleInstances MultiParamTypeClasses
-                       InstanceSigs FunctionalDependencies
+                       InstanceSigs FunctionalDependencies TupleSections
   default-language: Haskell2010
 
 test-suite exp-cache-test
