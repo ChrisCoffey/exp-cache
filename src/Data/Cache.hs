@@ -9,11 +9,15 @@ module Data.Cache (
     newSeqLRU,
     -- Actual LRU implementation
     LRU,
-    newLRU
+    newLRU,
+
+    MRU,
+    newMRU
     ) where
 
 import Data.Cache.Eviction (EvictionStrategy(..))
 import Data.Cache.Eviction.LRU
+import Data.Cache.Eviction.MRU
 
 import qualified Data.HashMap.Strict as HM
 import Control.DeepSeq (NFData)

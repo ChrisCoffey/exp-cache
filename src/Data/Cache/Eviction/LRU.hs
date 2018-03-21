@@ -72,7 +72,7 @@ instance EvictionStrategy LRU where
 
 -- | Transform the priorities of a PSQ by subtracting the minimum priority from all
 -- priorities in the queue. This becomes necessary when reaching the upper bound on an
--- 'Int'. The ordering of priorities is retained
+-- 'Word64'. The ordering of priorities is retained
 shrinkPSQPriorities :: (Integral p, Hashable k, Ord k) =>
     PSQ.HashPSQ k p v
     -> (p, PSQ.HashPSQ k p v)

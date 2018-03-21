@@ -33,6 +33,7 @@ library
   exposed-modules:
     Data.Cache
     , Data.Cache.Eviction.LRU
+    , Data.Cache.Eviction.MRU
   other-modules:
     Data.Cache.Eviction
   default-extensions:  DataKinds FlexibleContexts ScopedTypeVariables OverloadedStrings ViewPatterns NamedFieldPuns
