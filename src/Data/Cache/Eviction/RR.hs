@@ -1,6 +1,7 @@
 module Data.Cache.Eviction.RR (
     RR,
-    newRR
+    newRR,
+    rrSizeDebug
 ) where
 
 import Data.Cache.Eviction
@@ -16,6 +17,7 @@ data RR k = RR {
     seed :: StdGen,
     writeCell :: Int,
     upperBound :: Int,
+    overwritten :: Maybe k, -- This is a wart used for tracking evicted nodes
     contents :: StupidBiMap k
     } deriving (Show)
 
@@ -28,23 +30,27 @@ newRR ::
     StdGen
     -> Int
     -> RR k
-newRR gen upperBound = RR gen 0 upperBound (StupidBiMap M.empty M.empty)
+newRR gen upperBound = RR gen 0 upperBound Nothing (StupidBiMap M.empty M.empty)
 
 instance EvictionStrategy RR where
     recordLookup key rr@(RR {seed, upperBound , writeCell, contents=c@(StupidBiMap idxM kM) })
+        -- When the key has already been stored, take no action
         | knownKey key c = rr
+        -- When its a new key & the cache is full,
         | M.size idxM == upperBound = let
             (nextCell, seed') = randomR (0, upperBound) seed
+            valAtIndex = keyAtIndex writeCell c
             in RR {
                 writeCell = nextCell,
                 seed = seed',
+                overwritten = valAtIndex,
                 contents = recordPair key writeCell c
                 }
         | otherwise =
             RR {writeCell = writeCell + 1, contents = recordPair key writeCell c}
 
     -- Eviction is a no-op with random replacement caches
-    evict rr = (rr, Nothing)
+    evict rr@(RR {overwritten} ) = (rr {overwritten=Nothing} , overwritten)
 
 -- Horrible space efficiency
 data StupidBiMap k = StupidBiMap (M.Map Int k) (M.Map k Int)
@@ -71,3 +77,8 @@ knownKey :: (Eq k, Ord k) =>
     -> Bool
 knownKey k (StupidBiMap _ kM) =
     isJust $ M.lookup k kM
+
+rrSizeDebug ::
+    RR k
+    -> Int
+rrSizeDebug RR {contents = StupidBiMap l _} = M.size l

@@ -62,7 +62,7 @@ readThrough cache@(Cache {maxSize, evictionStrategy, cacheData, currentSize}) ke
             let strat' = recordLookup key evictionStrategy
             pure (v, cache {evictionStrategy = strat'} )
         -- On a miss when the cache is full:
-        -- 1) evict the oldest key (removes from HashMap & Strategy)
+        -- 1) evict the relevant key (removes from HashMap & Strategy)
         -- 2) Record the newest key in the strategy
         -- 3) Add key to the cache data
         Nothing | maxSize == currentSize -> do

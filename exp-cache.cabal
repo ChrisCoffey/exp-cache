@@ -54,6 +54,7 @@ test-suite exp-cache-test
       base >=4.7 && <5
     , exp-cache
     , HUnit
+    , QuickCheck
     , tasty
     , tasty-hunit
     , tasty-quickcheck
