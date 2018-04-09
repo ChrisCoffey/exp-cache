@@ -58,10 +58,11 @@ test-suite exp-cache-test
     , tasty
     , tasty-hunit
     , tasty-quickcheck
+    , random
   other-modules:
       Spec.LRUTests,
       Spec.MRUTests,
-
+      Spec.RRTests,
       Spec.CacheTests
   default-language: Haskell2010
 

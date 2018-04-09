@@ -38,18 +38,19 @@ instance EvictionStrategy RR where
         | knownKey key c = rr
         -- When its a new key & the cache is full,
         | M.size idxM == upperBound = let
-            (nextCell, seed') = randomR (0, upperBound) seed
+            (nextCell, seed') = randomR (0, upperBound -1) seed
             valAtIndex = keyAtIndex writeCell c
             in RR {
                 writeCell = nextCell,
                 seed = seed',
+                upperBound = upperBound,
                 overwritten = valAtIndex,
                 contents = recordPair key writeCell c
                 }
-        | otherwise =
-            RR {writeCell = writeCell + 1, contents = recordPair key writeCell c}
+        | M.size idxM < upperBound =
+            rr {writeCell = min (writeCell + 1) (upperBound -1), contents = recordPair key writeCell c}
+        | otherwise = rr
 
-    -- Eviction is a no-op with random replacement caches
     evict rr@(RR {overwritten} ) = (rr {overwritten=Nothing} , overwritten)
 
 -- Horrible space efficiency
