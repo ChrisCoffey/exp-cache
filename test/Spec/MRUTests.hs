@@ -11,7 +11,7 @@ import           Test.Tasty.HUnit             (testCase)
 
 
 mruTests :: TestTree
-mruTests = testGroup "mru" [
+mruTests = testGroup "MRU" [
     testCase "evict empty == empty" $ do
         let strat = newMRU :: MRU Int
             (s, Nothing) = evict strat :: (MRU Int, Maybe Int)

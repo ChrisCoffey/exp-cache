@@ -11,13 +11,19 @@ module Data.Cache (
     LRU,
     newLRU,
 
+    -- An MRU implementation based on the LRU implementation
     MRU,
-    newMRU
+    newMRU,
+
+    -- Random Replacement cache (RR)
+    RR,
+    newRR
     ) where
 
 import Data.Cache.Eviction (EvictionStrategy(..))
 import Data.Cache.Eviction.LRU
 import Data.Cache.Eviction.MRU
+import Data.Cache.Eviction.RR
 
 import qualified Data.HashMap.Strict as HM
 import Control.DeepSeq (NFData)
