@@ -35,6 +35,7 @@ library
   exposed-modules:
     Data.Cache
     , Data.Cache.Eviction.LRU
+    , Data.Cache.Eviction.LFU
     , Data.Cache.Eviction.MRU
     , Data.Cache.Eviction.RR
   other-modules:
