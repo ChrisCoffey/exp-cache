@@ -1,5 +1,6 @@
 import Benchmarks.LRU
 import Benchmarks.RR
+import Benchmarks.LFU
 
 import Criterion.Main
 
@@ -7,5 +8,6 @@ import Criterion.Main
 
 main = defaultMain [
     lruBenchmarks,
-    rrBenchmarks
+    rrBenchmarks,
+    lfuBenchmarks
     ]

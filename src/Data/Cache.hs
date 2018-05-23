@@ -17,13 +17,18 @@ module Data.Cache (
 
     -- Random Replacement cache (RR)
     RR,
-    newRR
+    newRR,
+
+    -- | Least Frequently Used Cache
+    LFU,
+    newLFU
     ) where
 
 import Data.Cache.Eviction (EvictionStrategy(..))
 import Data.Cache.Eviction.LRU
 import Data.Cache.Eviction.MRU
 import Data.Cache.Eviction.RR
+import Data.Cache.Eviction.LFU
 
 import qualified Data.HashMap.Strict as HM
 import Control.DeepSeq (NFData)
