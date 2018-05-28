@@ -12,11 +12,12 @@ import Data.Maybe (isJust)
 import System.Random (StdGen, randomR)
 
 -- | Random Replacement cache. The seed is fixed to an 'StdGen' since its both
--- easily accessible & good enough for this purpose.
+-- easily accessible & good enough for this purpose. Random replacement means exactly what it
+-- sounds like: when the cache fills up a random element is selected and evicted.
 data RR k = RR {
-    seed :: StdGen,
-    writeCell :: Int,
-    upperBound :: Int,
+    seed :: !StdGen,
+    writeCell :: !Int,
+    upperBound :: !Int,
     overwritten :: Maybe k, -- This is a wart used for tracking evicted nodes
     contents :: StupidBiMap k
     } deriving (Show)
@@ -26,6 +27,7 @@ instance Eq k => Eq (RR k) where
              upperBound l == upperBound r &&
              contents l == contents r
 
+-- | Generate a new Random Replacement cache using the provided seed & size.
 newRR ::
     StdGen
     -> Int

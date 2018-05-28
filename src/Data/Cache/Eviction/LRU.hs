@@ -37,7 +37,7 @@ instance EvictionStrategy SeqLRU where
             EmptyR -> (SeqLRU elements, Nothing)
             rest :> last -> (SeqLRU rest, Just last)
 
--- | An optimized version of an LRU cache
+-- | An optimized version of an LRU cache. The least recently used element in the cache is evicted once the cache fills up.
 data LRU k =
     LRU {
         queue :: PSQ.HashPSQ k Word64 (),

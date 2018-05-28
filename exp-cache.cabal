@@ -38,6 +38,7 @@ library
     , Data.Cache.Eviction.LFU
     , Data.Cache.Eviction.MRU
     , Data.Cache.Eviction.RR
+    , Data.Cache.Eviction.FIFO
   other-modules:
     Data.Cache.Eviction
   default-extensions:  DataKinds FlexibleContexts ScopedTypeVariables OverloadedStrings ViewPatterns NamedFieldPuns
@@ -51,6 +52,9 @@ test-suite exp-cache-test
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  default-extensions:  DataKinds FlexibleContexts ScopedTypeVariables OverloadedStrings ViewPatterns NamedFieldPuns
+                       KindSignatures RecordWildCards ConstraintKinds TypeSynonymInstances FlexibleInstances MultiParamTypeClasses
+                       InstanceSigs FunctionalDependencies TupleSections
   build-depends:
       base >=4.7 && <5
     , exp-cache
@@ -64,6 +68,7 @@ test-suite exp-cache-test
       Spec.LRUTests,
       Spec.MRUTests,
       Spec.RRTests,
+      Spec.LFUTests,
       Spec.CacheTests
   default-language: Haskell2010
 

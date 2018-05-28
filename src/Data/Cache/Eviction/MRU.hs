@@ -13,6 +13,7 @@ import Data.Maybe (maybe)
 import Data.Word (Word64)
 import qualified Data.HashPSQ as PSQ
 
+-- | A Most Recently Used cache. This evicts the most recently accessed item from the cache
 data MRU k =
     MRU {
         queue :: PSQ.HashPSQ k Word64 (),

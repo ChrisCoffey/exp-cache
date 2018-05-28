@@ -10,6 +10,8 @@ import Data.Word (Word64)
 import Data.Hashable
 import qualified Data.HashPSQ as PSQ
 
+-- | Evict the least frequently used element from the cache. This means as an element is accessed, its "score" increases
+-- and the element is more likely to survive eviction once the cache fills up.
 newtype LFU k = LFU {
     queue :: PSQ.HashPSQ k Word64 ()
     } deriving (Eq, Show)
