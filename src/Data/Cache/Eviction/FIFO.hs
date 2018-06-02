@@ -20,4 +20,4 @@ instance EvictionStrategy FIFO where
     evict (FIFO keys) =
         case viewr keys of
             EmptyR -> (FIFO keys, Nothing)
-            rest :> last -> (FIFO rest, Just last)
+            rest :> last -> (FIFO $ filter (/= last) rest, Just last)
