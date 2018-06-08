@@ -3,6 +3,7 @@ module Data.Cache.Eviction.FIFO (
     newFIFO
 ) where
 
+import Prelude hiding (filter)
 import Data.Cache.Eviction
 import Data.Sequence
 
